@@ -22,6 +22,8 @@ class AlumnosCursos(db.Model):
     __tablename__ = 'alumnos_cursos'
     alumno_id = db.Column(db.Integer, db.ForeignKey('alumnos.alumno_id'), primary_key=True)
     curso_id = db.Column(db.Integer, db.ForeignKey('cursos.curso_id'), primary_key=True)
+    activo = db.Column(db.Boolean, default=True)
+    fecha = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), server_default=func.now(), nullable=False)
 
     alumno = db.relationship('Alumnos', backref=db.backref('alumnos_cursos'))
     curso = db.relationship('Cursos', backref=db.backref('alumnos_cursos'))

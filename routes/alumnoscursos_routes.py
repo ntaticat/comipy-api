@@ -11,8 +11,9 @@ def asignar_alumno_a_curso():
     data = request.get_json()
     alumno_id = data.get('alumno_id')
     curso_id = data.get('curso_id')
+    activo=data.get('activo')
 
-    nueva_relacion = AlumnosCursos(alumno_id=alumno_id, curso_id=curso_id)
+    nueva_relacion = AlumnosCursos(alumno_id=alumno_id, curso_id=curso_id, activo=activo)
 
     db.session.add(nueva_relacion)
     db.session.commit()

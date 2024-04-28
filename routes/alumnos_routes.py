@@ -78,8 +78,6 @@ def actualizar_alumno(alumno_id):
     turno_id=datos_alumno.get('turno_id')
     activo=datos_alumno.get('activo')
     folio=datos_alumno.get('folio')
-    
-    alumno.nombres = 'Nuevo nombre de Rafael'
 
     alumno.nombre_completo=nombre_completo
     alumno.nombres=nombres
