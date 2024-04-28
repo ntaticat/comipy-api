@@ -1,10 +1,12 @@
 from flask import Blueprint, jsonify, request
 from models.models import db
 from models.models import Alumnos, AlumnosCursos, Asistencias
+from auth.auth import verificar_jwt
 
 alumnos_routes = Blueprint('alumnos_routes', __name__)
 
 @alumnos_routes.route('/api/alumnos', methods=['POST'])
+@verificar_jwt
 def crear_alumno():
     if not request.json:
         return jsonify({'error': 'No se proporcionaron datos JSON'}), 400
@@ -24,6 +26,7 @@ def crear_alumno():
     return 'Alumno creado'
 
 @alumnos_routes.route('/api/alumnos', methods=['GET'])
+@verificar_jwt
 def obtener_alumnos():
     alumnos = Alumnos.query.all()
     alumnos_json = [alumno.as_dict() for alumno in alumnos]
@@ -31,6 +34,7 @@ def obtener_alumnos():
     return jsonify(alumnos_json)
 
 @alumnos_routes.route('/api/alumnos/<int:alumno_id>', methods=['GET'])
+@verificar_jwt
 def obtener_alumno(alumno_id):
     alumno = Alumnos.query.get(alumno_id)
     
@@ -45,6 +49,7 @@ def obtener_alumno(alumno_id):
     return jsonify(alumno_dict)
 
 @alumnos_routes.route('/api/alumnos/<int:alumno_id>/asistencias', methods=['GET'])
+@verificar_jwt
 def obtener_alumno_asistencias(alumno_id):
     alumnoscursos = AlumnosCursos.query.filter_by(alumno_id=alumno_id).all()
     cursos_ids = [alumnocurso.curso_id for alumnocurso in alumnoscursos]
@@ -56,6 +61,7 @@ def obtener_alumno_asistencias(alumno_id):
     return jsonify(asistencias_json), 200
 
 @alumnos_routes.route('/api/alumnos/<int:alumno_id>', methods=['PUT'])
+@verificar_jwt
 def actualizar_alumno(alumno_id):
     if not request.json:
         return jsonify({'error': 'No se proporcionaron datos JSON'}), 400
@@ -87,6 +93,7 @@ def actualizar_alumno(alumno_id):
     return 'Alumno actualizado'
 
 @alumnos_routes.route('/api/alumnos/<int:alumno_id>', methods=['DELETE'])
+@verificar_jwt
 def eliminar_alumno(alumno_id):
     alumno = Alumnos.query.get(alumno_id)
     if not alumno:

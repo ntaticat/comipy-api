@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.debug = False
+app.debug = True
 CORS(app)
 
 mysqluri = os.getenv("MYSQL_STRING")

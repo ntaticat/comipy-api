@@ -1,10 +1,12 @@
 from models.models import AlumnosCursos
 from models.models import db
 from flask import Blueprint, jsonify, request
+from auth.auth import verificar_jwt
 
 alumnoscursos_routes = Blueprint('alumnoscursos_routes', __name__)
 
 @alumnoscursos_routes.route('/api/alumnoscursos', methods=['POST'])
+@verificar_jwt
 def asignar_alumno_a_curso():
     data = request.get_json()
     alumno_id = data.get('alumno_id')

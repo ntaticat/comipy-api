@@ -3,10 +3,12 @@
 from flask import Blueprint, jsonify, request
 from models.models import db
 from models.models import Docentes
+from auth.auth import verificar_jwt
 
 docentes_routes = Blueprint('docentes_routes', __name__)
 
 @docentes_routes.route('/api/docentes', methods=['POST'])
+@verificar_jwt
 def crear_docente():
     if not request.json:
         return jsonify({'error': 'No se proporcionaron datos JSON'}), 400
@@ -34,6 +36,7 @@ def crear_docente():
     return 'Docente creado'
 
 @docentes_routes.route('/api/docentes/<int:docente_id>', methods=['GET'])
+@verificar_jwt
 def obtener_docente(docente_id):
     docente = Docentes.query.get(docente_id)
     
@@ -43,6 +46,7 @@ def obtener_docente(docente_id):
     return jsonify(docente.as_dict())
 
 @docentes_routes.route('/api/docentes/<int:docente_id>', methods=['DELETE'])
+@verificar_jwt
 def eliminar_alumno(docente_id):
     docente = Docentes.query.get(docente_id)
     if not docente:
