@@ -25,6 +25,6 @@ def login():
     if not docente or not docente.check_password(password):
         return jsonify({'error': 'Email o contraseña incorrectos'}), 401
 
-    token = jwt.encode({'docente_id': docente.docente_id, 'exp': datetime.now(timezone.utc) + timedelta(hours=1)}, jwtsecret, algorithm='HS256')
+    token = jwt.encode({'docente_id': docente.docente_id, 'rol': docente.rol, 'exp': datetime.now(timezone.utc) + timedelta(hours=1)}, jwtsecret, algorithm='HS256')
 
     return jsonify({'token': token}), 200

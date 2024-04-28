@@ -42,6 +42,7 @@ class Docentes(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
     activo = db.Column(db.Boolean, default=True, nullable=False)
+    rol = db.Column(db.String(255), nullable=False, default='normal')
 
     def __repr__(self):
         return '<Docente %r>' % self.nombre_completo

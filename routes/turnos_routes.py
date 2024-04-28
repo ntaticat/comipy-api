@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from models.models import db
 from models.models import Turnos
-from auth.auth import verificar_jwt
+from auth.auth import verificar_jwt, solo_admin
 
 turnos_routes = Blueprint('turnos_routes', __name__)
 
@@ -23,7 +23,7 @@ def crear_turno():
     return 'Turno creado'
 
 @turnos_routes.route('/api/turnos/<int:turno_id>', methods=['DELETE'])
-@verificar_jwt
+@solo_admin
 def eliminar_turno(turno_id):
     turno = Turnos.query.get(turno_id)
     if not turno:

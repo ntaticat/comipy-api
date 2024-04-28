@@ -1,7 +1,7 @@
 from models.models import AlumnosCursos
 from models.models import db
 from flask import Blueprint, jsonify, request
-from auth.auth import verificar_jwt
+from auth.auth import verificar_jwt, solo_admin
 
 alumnoscursos_routes = Blueprint('alumnoscursos_routes', __name__)
 

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from models.models import db
 from models.models import Cursos, AlumnosCursos, Asistencias
-from auth.auth import verificar_jwt
+from auth.auth import verificar_jwt, solo_admin
 
 cursos_routes = Blueprint('cursos_routes', __name__)
 
@@ -62,7 +62,7 @@ def obtener_curso_asistencias(curso_id):
     return jsonify(asistencias_json), 200
 
 @cursos_routes.route('/api/cursos/<int:curso_id>', methods=['PUT'])
-@verificar_jwt
+@solo_admin
 def actualizar_curso(curso_id):
     if not request.json:
         return jsonify({'error': 'No se proporcionaron datos JSON'}), 400
@@ -94,7 +94,7 @@ def actualizar_curso(curso_id):
     return 'Curso actualizado'
 
 @cursos_routes.route('/api/cursos/<int:curso_id>', methods=['DELETE'])
-@verificar_jwt
+@solo_admin
 def eliminar_curso(curso_id):
     curso = Cursos.query.get(curso_id)
     if not curso:
